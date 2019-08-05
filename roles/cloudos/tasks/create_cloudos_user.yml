@@ -7,12 +7,27 @@
   - name: Create cloudos DB user
     command: psql -c "CREATE USER cloudos"
     ignore_errors: true
+
+  # check if cloudos database already exists
+  - name: Check if cloudos DB exists
+    command: psql -c "\c cloudos"
+    ignore_errors: true
+    register: cloudos_db_check
+
   - name: Create cloudos DB
     command: psql -c "CREATE DATABASE cloudos OWNER cloudos"
-    ignore_errors: true
-  - name: Create cloudos dev DB
-    command: psql -c "CREATE DATABASE cloudos_dev OWNER cloudos"
+    when: cloudos_db_check.rc != 0
+
+  # check if cloudos_dev database already exists
+  - name: Check if cloudos DB exists
+    command: psql -c "\c cloudos_dev"
+    register: cloudos_dev_db_check
     ignore_errors: true
     when: dev_server == true
+
+  - name: Create cloudos dev DB
+    command: psql -c "CREATE DATABASE cloudos_dev OWNER cloudos"
+    when: dev_server == true and cloudos_dev_db_check.rc != 0
+
   become: yes
   become_user: postgres
