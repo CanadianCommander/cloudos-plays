@@ -1,0 +1,15 @@
+- name: Install Postgres SQL Server
+  import_tasks: install_postgresql.yml
+  tags: tag_cloudos_install_postgresql
+
+- name: Create cloudos user
+  import_tasks: create_cloudos_user.yml
+  tags: tag_cloudos_create_cloudos_user
+
+- name: Configure httpd
+  import_tasks: httpd_config.yml
+  tags: tag_cloudos_httpd_config
+
+- name: Deploy http files
+  import_tasks: deploy_http_files.yml
+  tags: tag_cloudos_deploy_http_files

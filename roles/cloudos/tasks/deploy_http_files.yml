@@ -1,0 +1,18 @@
+
+- name: Create webroot
+  file:
+    path: /var/www/
+    state: directory
+    mode: 755
+
+- name: Install index.html in /var/www
+  copy:
+    src: index.html
+    dest: /var/www/index.html
+    mode: 644
+
+- name: Install status.html in /var/www
+  copy:
+    src: status.html
+    dest: /var/www/status.html
+    mode: 644

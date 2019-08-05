@@ -1,0 +1,12 @@
+- name: CloudOs server
+  remote_user: root
+  hosts: cloudos_servers
+
+  vars:
+    dev_server: false
+
+  roles:
+    - role: common
+      tags: tag_common
+    - role: cloudos
+      tags: tag_cloudos

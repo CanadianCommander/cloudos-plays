@@ -1,0 +1,11 @@
+- name: Install Yum Packages
+  import_tasks: yum_install.yml
+  tags: tag_common_yum_install
+
+- name: Configure Services
+  import_tasks: systemd.yml
+  tags: tag_common_systemd
+
+- name: Configure Firewall
+  import_tasks: firewall.yml
+  tags: tag_common_firewall

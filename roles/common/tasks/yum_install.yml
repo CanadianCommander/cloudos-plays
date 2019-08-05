@@ -1,0 +1,44 @@
+- name: Add epel Repository
+  yum:
+    name: epel-release
+    state: latest
+
+- name: Install Docker PreReq Packages
+  yum:
+    name: "{{ packages }}"
+    state: latest
+  vars:
+    packages:
+      - yum-utils
+      - device-mapper-persistent-data
+      - lvm2
+
+- name: Add Docker Repo
+  get_url:
+    url: https://download.docker.com/linux/centos/docker-ce.repo
+    dest: /etc/yum.repos.d/docker-ce.repo
+    mode: 644
+
+- name: Install Packages
+  yum:
+    name: "{{ packages }}"
+    state: latest
+  vars:
+    packages:
+      - vim
+      - htop
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - httpd
+      - iptables
+      - iptables-services
+
+- name: Install Dev Packages
+  yum:
+    name: "{{ packages }}"
+    state: latest
+  vars:
+    packages:
+      - nfs-utils
+  when: dev_server == true

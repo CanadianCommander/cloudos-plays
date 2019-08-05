@@ -1,0 +1,7 @@
+- name: Install httpd_cloudos.conf file
+  copy:
+    src: httpd_cloudos.conf
+    dest: /etc/httpd/conf.d/httpd_cloudos.conf
+    mode: 644
+  notify:
+    - restart_httpd

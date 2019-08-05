@@ -1,0 +1,13 @@
+
+- name: Start & Enable Docker
+  systemd:
+    name: docker
+    state: started
+    enabled: yes
+
+- name: Start & Enable httpd
+  systemd:
+    name: httpd
+    state: started
+    enabled: yes
+    
