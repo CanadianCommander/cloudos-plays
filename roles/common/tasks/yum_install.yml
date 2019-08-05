@@ -33,6 +33,7 @@
       - httpd
       - iptables
       - iptables-services
+      - git
 
 - name: Install Dev Packages
   yum:

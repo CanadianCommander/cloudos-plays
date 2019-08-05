@@ -13,3 +13,7 @@
 - name: Deploy http files
   import_tasks: deploy_http_files.yml
   tags: tag_cloudos_deploy_http_files
+
+- name: Install cloudos 
+  import_tasks: install_cloudos.yml
+  tags: tag_cloudos_install_cloudos

@@ -1,0 +1,12 @@
+dependencies:
+    - role: zzet.rbenv
+      vars:
+        rbenv:
+          env: user
+          version: v0.4.0
+          default_ruby: 2.6.3
+          rubies:
+            - version: 2.6.3
+      rbenv_users:
+        - root
+        - cloudos

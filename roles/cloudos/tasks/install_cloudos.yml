@@ -1,0 +1,6 @@
+- name: Fetch cloudos
+  git:
+    repo: https://github.com/CanadianCommander/cloudos.git
+    dest: /opt/cloudos/cloudos
+  become: yes
+  become_user: cloudos
