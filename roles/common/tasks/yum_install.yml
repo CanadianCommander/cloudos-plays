@@ -19,6 +19,12 @@
     dest: /etc/yum.repos.d/docker-ce.repo
     mode: 644
 
+- name: Add Yarnpkg Repo
+  get_url:
+    url: https://dl.yarnpkg.com/rpm/yarn.repo
+    dest: /etc/yum.repos.d/yarn.repo
+    mode: 644
+
 - name: Install Packages
   yum:
     name: "{{ packages }}"
@@ -34,6 +40,8 @@
       - iptables
       - iptables-services
       - git
+      - nodejs
+      - yarn
 
 - name: Install Dev Packages
   yum:

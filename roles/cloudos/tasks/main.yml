@@ -2,6 +2,10 @@
   import_tasks: install_postgresql.yml
   tags: tag_cloudos_install_postgresql
 
+- name: Install Gems
+  import_tasks: install_gems.yml
+  tags: tag_cloudos_install_gems
+
 - name: Create cloudos user
   import_tasks: create_cloudos_user.yml
   tags: tag_cloudos_create_cloudos_user
@@ -14,6 +18,6 @@
   import_tasks: deploy_http_files.yml
   tags: tag_cloudos_deploy_http_files
 
-- name: Install cloudos 
+- name: Install cloudos
   import_tasks: install_cloudos.yml
   tags: tag_cloudos_install_cloudos
