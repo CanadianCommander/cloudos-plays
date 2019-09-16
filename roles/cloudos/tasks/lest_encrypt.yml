@@ -1,0 +1,20 @@
+- name: Install httpd http (80) config
+  template:
+    src: 010_http_vhost.conf
+    dest: /etc/httpd/conf.d/010_http_vhost.conf
+    mode: 644
+  notify:
+    - restart_httpd
+
+- name: Check for cert files
+  stat:
+    path: "/etc/letsencrypt/live/{{inventory_hostname}}/privkey.pem"
+  register: private_key
+
+- name: Run Certbot
+  command: certbot certonly --apache --non-interactive --agree-tos --register-unsafely-without-email
+  when: private_key.stat.exists == False and dev_server == false
+
+- name: Renew Certbot
+  command: certbot renew
+  when: private_key.stat.exists == True and dev_server == false

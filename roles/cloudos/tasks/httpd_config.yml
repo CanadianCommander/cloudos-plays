@@ -1,7 +1,15 @@
 - name: Install httpd_cloudos.conf file
-  copy:
-    src: httpd_cloudos.conf
-    dest: /etc/httpd/conf.d/httpd_cloudos.conf
+  template:
+    src: 020_https_cloudos.conf
+    dest: /etc/httpd/conf.d/020_https_cloudos.conf
     mode: 644
   notify:
     - restart_httpd
+
+- name: Install SELinux module for httpd. Copy module
+  copy:
+    src: httpd.pp
+    dest: /tmp/httpd.pp
+
+- name: Install SELinux module for httpd. Install module
+  command: semodule -i /tmp/httpd.pp

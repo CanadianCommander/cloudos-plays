@@ -4,3 +4,19 @@
     dest: /opt/cloudos/cloudos
   become: yes
   become_user: cloudos
+
+- name: create cloudos install directory
+  file:
+    path: /var/cloudos/install
+    owner: cloudos
+    group: cloudos
+    mode: '775'
+    state: directory
+
+- name: create cloudos socket directroy
+  file:
+    path: /var/cloudos/sockets
+    owner: cloudos
+    group: cloudos
+    mode: '777'
+    state: directory

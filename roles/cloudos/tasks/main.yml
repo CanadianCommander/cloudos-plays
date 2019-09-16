@@ -10,6 +10,10 @@
   import_tasks: create_cloudos_user.yml
   tags: tag_cloudos_create_cloudos_user
 
+- name: Get SSL cert
+  import_tasks: lest_encrypt.yml
+  tags: tag_lets_encrypt
+
 - name: Configure httpd
   import_tasks: httpd_config.yml
   tags: tag_cloudos_httpd_config

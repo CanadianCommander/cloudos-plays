@@ -3,6 +3,12 @@
     name: cloudos
     home: /opt/cloudos
 
+- name: Add to docker group
+  user:
+    name: cloudos
+    append: yes
+    groups: docker
+
 - block:
   - name: Create cloudos DB user
     command: psql -c "CREATE USER cloudos"

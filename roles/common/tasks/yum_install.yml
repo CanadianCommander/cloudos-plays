@@ -37,6 +37,9 @@
       - docker-ce-cli
       - containerd.io
       - httpd
+      - mod_ssl
+      - certbot
+      - python2-certbot-apache
       - iptables
       - iptables-services
       - git
