@@ -3,6 +3,12 @@
     name: cloudos
     home: /opt/cloudos
 
+- name: Make home world readable
+  file:
+    path: /opt/cloudos
+    mode: 0755
+    state: directory
+
 - name: Add to docker group
   user:
     name: cloudos

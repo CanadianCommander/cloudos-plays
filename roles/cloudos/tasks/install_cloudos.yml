@@ -5,6 +5,20 @@
   become: yes
   become_user: cloudos
 
+- name: Create log directory
+  file:
+    path: /opt/cloudos/cloudos/log
+    owner: cloudos
+    group: cloudos
+    state: directory
+
+# would like a better way to do this
+- name: Generate credentails
+  shell: cd /opt/cloudos/cloudos/ && EDITOR=ll ~/.rbenv/shims/bundle exec rails credentials:edit
+  ignore_errors: true
+  become: yes
+  become_user: cloudos
+
 - name: create cloudos install directory
   file:
     path: /var/cloudos/install
@@ -13,10 +27,18 @@
     mode: '775'
     state: directory
 
-- name: create cloudos socket directroy
-  file:
-    path: /var/cloudos/sockets
-    owner: cloudos
-    group: cloudos
-    mode: '777'
-    state: directory
+- name: Create cloudos database
+  command: psql -c "CREATE DATABASE cloudos WITH OWNER cloudos"
+  ignore_errors: true
+  become: yes
+  become_user: postgres
+
+- name: Run Database Migrations
+  shell: cd /opt/cloudos/cloudos/ && RAILS_ENV=production ~/.rbenv/shims/bundle exec rake db:migrate
+  become: yes
+  become_user: cloudos
+
+- name: Compile Assets
+  shell:  cd /opt/cloudos/cloudos/ && RAILS_ENV=production ~/.rbenv/shims/bundle exec rake assets:precompile
+  become: yes
+  become_user: cloudos

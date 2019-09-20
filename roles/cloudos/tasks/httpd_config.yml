@@ -1,10 +1,62 @@
+- name: Enable mod macro
+  lineinfile:
+    path: /etc/httpd/conf.modules.d/00-base.conf
+    regexp: "LoadModule macro_module modules/mod_macro.so"
+    line: "LoadModule macro_module modules/mod_macro.so"
+    state: present
+  notify:
+    - restart_httpd
+
+- name: Change Document root to /var/www
+  lineinfile:
+    path: /etc/httpd/conf/httpd.conf
+    regexp: "DocumentRoot \"/var/"
+    line: "DocumentRoot \"/var/www\""
+    state: present
+  notify:
+    - restart_httpd
+
+- name: Symlink Document root to rails public folder
+  file:
+    path: /var/www
+    src: /opt/cloudos/cloudos/public
+    state: link
+
 - name: Install httpd_cloudos.conf file
   template:
     src: 020_https_cloudos.conf
     dest: /etc/httpd/conf.d/020_https_cloudos.conf
-    mode: 644
+    mode: 0644
   notify:
     - restart_httpd
+
+- name: Install httpd_cloudos_proxy.conf file
+  template:
+    src: 030_https_cloudos_proxy.conf
+    dest: /etc/httpd/conf.d/030_https_cloudos_proxy.conf
+    mode: 0644
+  notify:
+    - restart_httpd
+
+- name: Add proxy to httpd conf
+  lineinfile:
+    path: /etc/httpd/conf.d/030_https_cloudos_proxy.conf
+    regexp: "Use Cloudos_Proxy {{ item }} {{ item|int - 1000 }}"
+    line: "Use Cloudos_Proxy {{ item }} {{ item|int - 1000 }}"
+    state: present
+  with_sequence: start=5000 end=5128
+  notify:
+    - restart_httpd
+
+- name: Allow apache to run on proxy ports
+  shell: "semanage port -a -t http_port_t -p tcp {{ item }} || semanage port -m -t http_port_t -p tcp {{ item }}"
+  ignore_errors: true
+  with_sequence: start=4000 end=4128
+  notify:
+    - restart_httpd
+
+- name: Allow apache to initiate outgoing connections
+  command: "setsebool -P httpd_can_network_connect 1"
 
 - name: Install SELinux module for httpd. Copy module
   copy:

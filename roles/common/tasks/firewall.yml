@@ -16,7 +16,7 @@
     path: "/etc/sysconfig/iptables"
     regexp: '-A INPUT -p tcp -m tcp --dport 80 -m comment --comment "allow http trafic" -m conntrack --ctstate NEW -j ACCEPT'
     line: '-A INPUT -p tcp -m tcp --dport 80 -m comment --comment "allow http trafic" -m conntrack --ctstate NEW -j ACCEPT'
-    insertbefore: "-A INPUT -j REJECT --reject-with icmp-host-prohibited"
+    insertbefore: ".*--reject-with icmp-host-prohibited.*"
   notify:
     - restart_iptables
 
@@ -25,16 +25,6 @@
     path: "/etc/sysconfig/iptables"
     regexp: '-A INPUT -p tcp -m tcp --dport 443 -m comment --comment "allow https trafic" -m conntrack --ctstate NEW -j ACCEPT'
     line: '-A INPUT -p tcp -m tcp --dport 443 -m comment --comment "allow https trafic" -m conntrack --ctstate NEW -j ACCEPT'
-    insertbefore: "-A INPUT -j REJECT --reject-with icmp-host-prohibited"
-  notify:
-    - restart_iptables
-
-- name: Allow Rails dev port
-  lineinfile:
-    path: "/etc/sysconfig/iptables"
-    regexp: '-A INPUT -p tcp -m tcp --dport 3000 -m comment --comment "allow rails dev" -m conntrack --ctstate NEW -j ACCEPT'
-    line: '-A INPUT -p tcp -m tcp --dport 3000 -m comment --comment "allow rails dev" -m conntrack --ctstate NEW -j ACCEPT'
-    insertbefore: "-A INPUT -j REJECT --reject-with icmp-host-prohibited"
-  when: dev_server == true
+    insertbefore: ".*--reject-with icmp-host-prohibited.*"
   notify:
     - restart_iptables

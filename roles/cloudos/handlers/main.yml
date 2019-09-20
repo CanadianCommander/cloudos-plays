@@ -2,3 +2,7 @@
   systemd:
     name: httpd
     state: restarted
+- name: restart_iptables
+  systemd:
+    name: iptables
+    state: restarted

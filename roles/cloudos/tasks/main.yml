@@ -14,13 +14,13 @@
   import_tasks: lest_encrypt.yml
   tags: tag_lets_encrypt
 
+- name: Configure firewall (iptables)
+  import_tasks: firewall.yml
+  tags: tag_cloudos_firewall
+
 - name: Configure httpd
   import_tasks: httpd_config.yml
   tags: tag_cloudos_httpd_config
-
-- name: Deploy http files
-  import_tasks: deploy_http_files.yml
-  tags: tag_cloudos_deploy_http_files
 
 - name: Install cloudos
   import_tasks: install_cloudos.yml

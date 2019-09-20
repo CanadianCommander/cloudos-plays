@@ -2,7 +2,7 @@
   template:
     src: 010_http_vhost.conf
     dest: /etc/httpd/conf.d/010_http_vhost.conf
-    mode: 644
+    mode: 0644
   notify:
     - restart_httpd
 
