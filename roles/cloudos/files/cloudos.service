@@ -7,10 +7,10 @@ After=postgresql-11.service
 User=cloudos
 Group=cloudos
 WorkingDirectory=/opt/cloudos/cloudos/
-Type=forking
+Type=simple
 
 Environment="RAILS_ENV=production"
-ExecStart=/opt/cloudos/.rbenv/shims/puma -d -C /opt/cloudos/cloudos/config/puma.rb
+ExecStart=/opt/cloudos/.rbenv/shims/puma -C /opt/cloudos/cloudos/config/puma.rb
 
 # restart service if it is failed for more than 30 seconds.
 Restart=on-failure

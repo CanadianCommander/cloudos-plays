@@ -3,7 +3,7 @@
     path: /etc/sysconfig/iptables
     regexp: "-A INPUT -p tcp -m tcp --dport {{ item }} -m comment --comment \"rails proxy\" -m conntrack --ctstate NEW -j ACCEPT"
     line: "-A INPUT -p tcp -m tcp --dport {{ item }} -m comment --comment \"rails proxy\" -m conntrack --ctstate NEW -j ACCEPT"
-    insertbefore: ".*--reject-with icmp-host-prohibited.*"
+    insertbefore: "-A INPUT -j REJECT --reject-with icmp-host-prohibited"
   with_sequence: start=4000 end=4128
   notify:
     - restart_iptables
