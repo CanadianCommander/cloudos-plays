@@ -1,0 +1,13 @@
+- name: Install cloudos systemd file
+  copy:
+    src: cloudos.service
+    dest: /etc/systemd/system/cloudos.service
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Start & enable Cloudos service
+  systemd:
+    name: cloudos
+    state: started
+    enabled: yes

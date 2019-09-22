@@ -25,3 +25,7 @@
 - name: Install cloudos
   import_tasks: install_cloudos.yml
   tags: tag_cloudos_install_cloudos
+
+- name: Configure Systemd
+  import_tasks: config_systemd.yml
+  tags: tag_cloudos_config_systemd
