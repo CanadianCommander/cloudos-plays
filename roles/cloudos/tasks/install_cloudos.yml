@@ -12,6 +12,11 @@
     group: cloudos
     state: directory
 
+- name: Install cloudos gems
+  shell: cd /opt/cloudos/cloudos/ && ~/.rbenv/shims/bundle install
+  become: yes
+  become_user: cloudos
+
 # would like a better way to do this
 - name: Generate credentails
   shell: cd /opt/cloudos/cloudos/ && EDITOR=ll ~/.rbenv/shims/bundle exec rails credentials:edit
@@ -42,3 +47,10 @@
   shell:  cd /opt/cloudos/cloudos/ && RAILS_ENV=production ~/.rbenv/shims/bundle exec rake assets:precompile
   become: yes
   become_user: cloudos
+
+- name: Restart Cloudos
+  systemd:
+    name: cloudos
+    state: restarted
+  # possible that systemd service file is not installed yet
+  ignore_errors: true
