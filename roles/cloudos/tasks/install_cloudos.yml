@@ -12,6 +12,31 @@
     group: cloudos
     state: directory
 
+- name: create cloudos install directory
+  file:
+    path: /var/cloudos/install
+    owner: cloudos
+    group: cloudos
+    mode: '775'
+    state: directory
+
+- name: create cloudos user directory
+  file:
+    path: /var/cloudos/user
+    owner: cloudos
+    group: cloudos
+    mode: '775'
+    state: directory
+
+- name: create cloudos dev user directory
+  file:
+    path: /var/cloudos/user/dev
+    owner: cloudos
+    group: cloudos
+    mode: '775'
+    state: directory
+  when: dev_server == true 
+
 - name: Install cloudos gems
   shell: cd /opt/cloudos/cloudos/ && ~/.rbenv/shims/bundle install
   become: yes
@@ -23,14 +48,6 @@
   ignore_errors: true
   become: yes
   become_user: cloudos
-
-- name: create cloudos install directory
-  file:
-    path: /var/cloudos/install
-    owner: cloudos
-    group: cloudos
-    mode: '775'
-    state: directory
 
 - name: Create cloudos database
   command: psql -c "CREATE DATABASE cloudos WITH OWNER cloudos"
